@@ -1,5 +1,3 @@
-CREATE DATABASE chatapp;
-
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE OR REPLACE FUNCTION generate_uid(size INT) RETURNS TEXT AS $$
@@ -22,7 +20,7 @@ CREATE TABLE users (
   user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_name VARCHAR(255) NOT NULL,
   user_password VARCHAR(255) NOT NULL,
-  last_active_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  last_active_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE users RENAME COLUMN user_id TO id;
@@ -59,9 +57,7 @@ ALTER TABLE messages
    REFERENCES users(id);
 ALTER TABLE messages ALTER COLUMN user_id SET NOT NULL;
 
--- check table's data type
-\d messages
- 
+
 ALTER TABLE messages ALTER COLUMN channel_id DROP NOT NULL;
 ALTER TABLE messages 
    ADD CONSTRAINT fk_link_channel_id
@@ -75,14 +71,12 @@ ALTER TABLE messages RENAME COLUMN post_time TO created_at;
 ALTER TABLE messages DROP COLUMN user_name;
 ALTER TABLE messages DROP COLUMN channel_name;
 
-SELECT * FROM messages JOIN users ON messages.user_id = users.user_id WHERE user_id = 1;
-
 TRUNCATE messages; 
 DELETE FROM messages;
 DROP TABLE IF EXISTS messages;
 
-INSERT INTO users (user_name, user_password) VALUES ('ben', '123');
+INSERT INTO users (name, password) VALUES ('ben', '123');
 
-INSERT INTO channels (channel_name) VALUES ('General');
+INSERT INTO channels (name) VALUES ('General');
 
 SELECT * FROM users;
