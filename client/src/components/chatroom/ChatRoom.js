@@ -184,7 +184,7 @@ const Chatroom = ({ user, setAuth }) => {
           </div>
         </div>
 
-        <Form className="input-msg" onSubmit={() => handleClick(e, msgInput)}>
+        <Form className="input-msg" onSubmit={(e) => handleClick(e, msgInput)}>
           <InputGroup className="py-2 px-5">
             <Form.Control
               placeholder="Write a message..."
